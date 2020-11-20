@@ -1,4 +1,7 @@
-create database agenda;
+create database agenda
+default character set utf8
+default collate utf8_general_ci;
+
 use agenda;
 
 CREATE TABLE medico
@@ -9,7 +12,7 @@ CREATE TABLE medico
 	senha 		   text         not null,
 	data_criacao   timestamp    default current_timestamp,
 	data_alteracao timestamp    default current_timestamp
-);
+)DEFAULT CHARSET=utf8;
 
 CREATE TABLE horario
 (
@@ -18,9 +21,10 @@ CREATE TABLE horario
 	
 	id 		 	     int       auto_increment primary key,
 	id_medico 	     int 	   not null,
-	data_horario     datetime  not null,
+	data_horario     datetime,
 	horario_agendado int 	   default 0,
 	data_criacao     timestamp default current_timestamp,
 	data_alteracao   timestamp default current_timestamp,
 	FOREIGN KEY (id_medico) REFERENCES medico(id)
-);
+)DEFAULT CHARSET=utf8;
+

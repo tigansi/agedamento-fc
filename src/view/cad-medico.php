@@ -50,8 +50,8 @@
               <button type="submit" id="btn_form" class="btn btn-lg">
                 Realizar cadastro</button><br />
               <a style="text-decoration: underline" href="list-medico.php">Voltar para a página inicial</a>
-              <p id="info_problema" class="text-danger"></p>
-              <p id="info_acerto" class="text-success"></p>
+              <p style="font-weight: bold;" id="info_problema" class="text-danger"></p>
+              <p style="font-weight: bold;" id="info_acerto" class="text-success"></p>
             </center>
           </form>
         </div>

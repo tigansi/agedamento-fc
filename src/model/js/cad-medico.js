@@ -40,7 +40,6 @@ $(document).ready(function () {
             },
             url:
               "http://localhost/agendamento-fc/src/controller/cadastroMedico.php",
-            beforeSend: function () {},
             success: function (data) {
               if (data["sucesso"] == true) {
                 $("#info_problema").hide();

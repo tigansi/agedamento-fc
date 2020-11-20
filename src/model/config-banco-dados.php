@@ -24,6 +24,7 @@ class MySQL
 
     public function Conexao()
     {
+        //header("Content-Type: application/json; charset=utf-8");
         return mysqli_connect(
             $this->host,
             $this->user,
