@@ -1,26 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Signika:wght@300&display=swap");
-
-body {
-  font-family: "Signika", sans-serif;
-  background-color: rgb(238, 238, 238);
-}
-
-#cab {
-  width: 100%;
-  padding: 30px;
-  background-color: #0094cf;
-  margin-bottom: 3%;
-}
-
-#nav-cab {
-  background-color: #0094cf;
-  margin-bottom: 3%;
-}
-
-#btn_cad_med {
-  background-color: #ffffff;
-  color: #0094cf;
-}
 
 #btn_form {
   background-color: #0094cf;
@@ -46,15 +23,3 @@ body {
   flex-direction: column;
   justify-content: center;
 }*/
-
-@media screen and (min-width: 792px) {
-  #nav-cab {
-    display: none;
-  }
-}
-
-@media (max-width: 792px) {
-  #cab {
-    display: none;
-  }
-}

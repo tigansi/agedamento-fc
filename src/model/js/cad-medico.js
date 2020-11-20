@@ -3,6 +3,9 @@ $(document).ready(function () {
   $("#info_email").hide();
   $("#info_senha").hide();
 
+  $("#info_problema").hide();
+  $("#info_acerto").hide();
+
   $("#nome").val("Tiago Igansi");
   $("#email").val("tiago@igansi.com");
   $("#senha").val("Saud@2020");
@@ -38,7 +41,21 @@ $(document).ready(function () {
             url:
               "http://localhost/agendamento-fc/src/controller/cadastroMedico.php",
             beforeSend: function () {},
-            success: function (data) {},
+            success: function (data) {
+              if (data["sucesso"] == true) {
+                $("#info_problema").hide();
+                $("#info_acerto").text(data["msg"]);
+                $("#info_acerto").show();
+
+                setTimeout(function () {
+                  location.reload();
+                }, 3000);
+              } else {
+                $("#info_acerto").hide();
+                $("#info_problema").text(data["msg"]);
+                $("#info_problema").show();
+              }
+            },
           });
         }
       }

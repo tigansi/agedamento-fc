@@ -1,3 +1,3 @@
 <?php
 
-header("location:cad-medico.php");
+header("location:list-medico.php");

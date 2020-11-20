@@ -1,3 +1,4 @@
+create database agenda;
 use agenda;
 
 CREATE TABLE medico
@@ -6,8 +7,8 @@ CREATE TABLE medico
 	email 		   varchar(80)  not null,
 	nome  	       varchar(100) not null,
 	senha 		   text         not null,
-	data_criacao   timestamp    not null,
-	data_alteracao timestamp
+	data_criacao   timestamp    default current_timestamp,
+	data_alteracao timestamp    default current_timestamp
 );
 
 CREATE TABLE horario
@@ -19,7 +20,7 @@ CREATE TABLE horario
 	id_medico 	     int 	   not null,
 	data_horario     datetime  not null,
 	horario_agendado int 	   default 0,
-	data_criacao     timestamp not null,
-	data_alteracao   timestamp,
+	data_criacao     timestamp default current_timestamp,
+	data_alteracao   timestamp default current_timestamp,
 	FOREIGN KEY (id_medico) REFERENCES medico(id)
 );
