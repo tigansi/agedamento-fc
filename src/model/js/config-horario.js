@@ -26,7 +26,7 @@ $(document).ready(function () {
 
             setTimeout(function () {
               location.reload();
-            }, 3000);
+            }, 1000);
           } else {
             $("#info_acerto").hide();
             $("#info_problema").text(data["msg"]);
@@ -43,7 +43,17 @@ $(document).ready(function () {
 $(document).ready(function () {
   $(document).on("click", "#remove_hor", function () {
     var id = $(this).attr("data-id-hor");
-
-    alert(id);
+    $.ajax({
+      type: "POST",
+      data: {
+        id: id,
+      },
+      url: "http://localhost/agendamento-fc/src/controller/removeHorario.php",
+      success: function (data) {
+        if (data["sucesso"]) {
+          window.location.reload();
+        }
+      },
+    });
   });
 });

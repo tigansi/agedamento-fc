@@ -32,13 +32,15 @@
 
                 if ($cmd->execute()) :
                     while ($dados = $cmd->fetch(PDO::FETCH_ASSOC)) :
+                        //id do médico
                         $id = $dados["id"];
+                        //nome do médico
                         $nm = $dados["nome"];
 
                 ?>
                         <div id="card">
                             <div class="container">
-                                <div class="row">
+                                <div class="row" style="margin-bottom: 20px;">
                                     <div class="col-md-7">
                                         <h3 id="nm_med"><?php echo $nm;  ?></h3>
                                     </div>
@@ -46,6 +48,27 @@
                                         <button data-id-med="<?php echo $id; ?>" id="btn_edit_cad" class="btn btn-sm btn-outline-primary btn_edit_cad">Editar cadastro</button>
                                         <button data-nm-med="<?php echo $nm; ?>" data-id-med="<?php echo $id; ?>" id="btn_config_hor" class="btn btn-sm btn-outline-primary">Configurar horário</button>
                                     </div>
+                                </div>
+                                <div class="row">
+                                    <?php
+                                    $sql_h = "SELECT
+                                                    id,
+                                                    DATE_FORMAT(data_horario,'%d/%m/%Y às %H:%i') as data_horario
+                                                FROM horario
+                                                WHERE id_medico = ? AND
+                                                      horario_agendado = 0";
+
+                                    $cmd_h = $mysql->conn->prepare($sql_h);
+                                    $cmd_h->bindValue(1, $id, PDO::PARAM_INT);
+
+                                    if ($cmd_h->execute()) :
+                                        while ($dados_h = $cmd_h->fetch(PDO::FETCH_ASSOC)) :
+                                    ?>
+                                            <div class="col-md-3 col-sm-12">
+                                                <button id="btn_hor_med" data-id-hor="<?php echo $dados_h["id"]; ?>" data-id-med="<?php echo $dados["id"]; ?>" class="btn btn-sm btn-block"><?php echo $dados_h["data_horario"]; ?></button>
+                                            </div>
+                                    <?php endwhile;
+                                    endif; ?>
                                 </div>
                             </div>
                         </div>
