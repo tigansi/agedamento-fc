@@ -41,6 +41,7 @@ $(document).ready(function () {
             url:
               "http://localhost/agendamento-fc/src/controller/cadastroMedico.php",
             success: function (data) {
+              console.log(data);
               if (data["sucesso"] == true) {
                 $("#info_problema").hide();
                 $("#info_acerto").text(data["msg"]);

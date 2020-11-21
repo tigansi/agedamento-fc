@@ -23,30 +23,35 @@
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <?php
-                require("../model/config-banco-dados.php");
+                include("../model/config-banco-dados.php");
                 $mysql = new MySQL();
+                $mysql->Conexao();
 
                 $sql = "SELECT * FROM medico";
+                $cmd = $mysql->conn->prepare($sql);
 
-                $cmd = mysqli_query($mysql->Conexao(), $sql);
+                if ($cmd->execute()) :
+                    while ($dados = $cmd->fetch(PDO::FETCH_ASSOC)) :
+                        $id = $dados["id"];
+                        $nm = $dados["nome"];
 
-                foreach ($cmd as $valor) :
                 ?>
-                    <div id="card">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-7">
-                                    <h3 id="nm_med"><?php echo $valor["nome"]; ?></h3>
-                                </div>
-                                <div class="col-md-5">
-                                    <button data-id-med="<?php echo $valor["id"]; ?>" id="btn_edit_cad" class="btn btn-sm btn-outline-primary">Editar cadastro</button>
-                                    <button data-id-med="<?php echo $valor["id"]; ?>" id="btn_config_hor" class="btn btn-sm btn-outline-primary">Configurar horário</button>
+                        <div id="card">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <h3 id="nm_med"><?php echo $nm;  ?></h3>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <button data-id-med="<?php echo $id; ?>" id="btn_edit_cad" class="btn btn-sm btn-outline-primary btn_edit_cad">Editar cadastro</button>
+                                        <button data-nm-med="<?php echo $nm; ?>" data-id-med="<?php echo $id; ?>" id="btn_config_hor" class="btn btn-sm btn-outline-primary">Configurar horário</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                <?php endforeach; ?>
+                        <br>
+                <?php endwhile;
+                endif; ?>
             </div>
             <div class="col-md-3"></div>
         </div>

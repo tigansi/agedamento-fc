@@ -3,7 +3,13 @@
   padding: 15px;
 }
 
-#nm_med{
+#nm_med, #titulo_config, #nm_medico{
   font-weight: bold;
   color: #004768;
+}
+
+#btn_form {
+  background-color: #0094cf;
+  color: white;
+  margin-bottom: 2%;
 }

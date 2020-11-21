@@ -1,70 +1,58 @@
 <?php
 
+require_once("../model/config-banco-dados.php");
 
-
-class ModelMedico
+class ModelMedico extends MySQL
 {
     public function CadastrarMedico(ToMedico $to_medico)
     {
-        $email = $to_medico->getEmail();
-        $nome = $to_medico->getNome();
-        $senha = $to_medico->getSenha();
-        $data_criacao = $to_medico->getData_criacao();
-
         try {
-            require("config-banco-dados.php");
-            $mysql = new MySQL();
+            //Conexão com o banco
+            $this->Conexao();
 
             //Verificação se o usuário já existe com base no email
-            $sql = "SELECT email FROM medico WHERE email = '$email'";
-            $cmd = mysqli_query($mysql->Conexao(), $sql);
-            $tot = mysqli_num_rows($cmd);
+            $sql = "SELECT email FROM medico WHERE email = ?";
+            $cmd = $this->conn->prepare($sql);
+            $cmd->bindValue(1, $to_medico->getEmail(), PDO::PARAM_STR);
 
-            if ($tot > 0) {
-                $result = array(
-                    "sucesso" => false,
-                    "msg" => "Médico já cadastrado com esse e-mail"
-                );
-            } else {
-                // Se não existe, faz o cadastro no banco
-                $sql = "INSERT
-                            INTO medico(
-                                 email,
-                                 nome,
-                                 senha,
-                                 data_criacao)
-                        VALUES('$email',
-                               '$nome',
-                               '$senha',
-                               '$data_criacao')";
+            if ($cmd->execute()) {
+                if ($cmd->rowCount() > 0) {
+                    //Informa que já existe um cadastro
+                    $result = array(
+                        "sucesso" => false,
+                        "msg" => "Médico já cadastrado com esse e-mail"
+                    );
+                } else {
+                    //Cadastra o novo médico
+                    $query = "INSERT 
+                                INTO medico(email,
+                                            nome,
+                                            senha)
+                                VALUES(?, ?, ?)";
+                    $myquery = $this->conn->prepare($query);
+                    $myquery->bindValue(1, $to_medico->getEmail(), PDO::PARAM_STR);
+                    $myquery->bindValue(2, $to_medico->getNome(), PDO::PARAM_STR);
+                    $myquery->bindValue(3, $to_medico->getSenha(), PDO::PARAM_STR);
 
-                mysqli_set_charset($mysql->Conexao(), "UTF-8");
-                mysqli_query($mysql->Conexao(), $sql);
-                
-                /*
-                $sql = "SELECT id 
-                        FROM medico 
-                        WHERE nome = '$nome'";
-
-                $cmd = mysqli_query($mysql->Conexao(), $sql);
-                $dad = mysqli_fetch_assoc($cmd);
-
-                foreach ($dad as $id) {
-                    $id_medico = $id;
+                    //Verificação se tudo ocorreu normalmente
+                    if ($myquery->execute()) {
+                        $result = array(
+                            "sucesso" => true,
+                            "msg" => "Médico cadastrado com sucesso"
+                        );
+                    } else {
+                        $result = array(
+                            "sucesso" => false,
+                            "msg" => "Não houve cadastro"
+                        );
+                    }
                 }
-
-                $sql = "INSERT INTO horario(id_medico) VALUES($id_medico)";
-                mysqli_query($mysql->Conexao(), $sql);*/
-
-                $result = array(
-                    "sucesso" => true,
-                    "msg" => "Médico cadastrado com sucesso"
-                );
             }
-        } catch (mysqli_sql_exception $e) {
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage());
             $result = array(
                 "sucesso" => false,
-                "msg" => $e
+                "msg" => $ex->getMessage()
             );
         }
 

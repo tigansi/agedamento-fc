@@ -7,29 +7,32 @@
 
 class MySQL
 {
-    private $host;
     private $user;
     private $pass;
-    private $port;
-    private $db;
+    public  $conn;
 
     public function __construct()
     {
-        $this->host = 'localhost';
-        $this->user = 'root';
-        $this->pass = '';
-        $this->port = '3306';
-        $this->db = 'agenda';
+        $this->user = "root";
+        $this->pass = "";
     }
 
     public function Conexao()
     {
-        //header("Content-Type: application/json; charset=utf-8");
-        return mysqli_connect(
-            $this->host,
-            $this->user,
-            $this->pass,
-            $this->db,
-            $this->port);
+        try {
+            $this->conn = new PDO(
+                "mysql:host=localhost;port=3306;dbname=agenda",
+                $this->user,
+                $this->pass
+            );
+            $this->conn->exec("set names utf8");
+        } catch (PDOException $e) {
+            return 'ERROR: ' . $e->getMessage();
+        }
+    }
+
+    public function Desconecta()
+    {
+        $this->conn = null;
     }
 }
