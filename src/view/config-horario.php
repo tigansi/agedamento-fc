@@ -74,7 +74,7 @@
                             <div class="container">
                                 <div class="row" style="margin-bottom: -30px;">
                                     <div class="col-md-9">
-                                        <p><?php echo $dados["data_horario"]; ?></p>
+                                        <p style="font-weight:bold; color: #004768;"><?php echo $dados["data_horario"]; ?></p>
 
                                     </div>
                                     <div class="col-md-3">

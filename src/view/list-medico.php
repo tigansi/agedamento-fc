@@ -22,50 +22,66 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
+
                 <?php
                 include("../model/config-banco-dados.php");
                 $mysql = new MySQL();
                 $mysql->Conexao();
 
-                $sql = "SELECT * FROM medico";
-                $cmd = $mysql->conn->prepare($sql);
+                $lista = array();
 
+                $sql = "SELECT 
+                            med.id as id_med,
+                            med.nome,
+                            hor.data_horario,
+                            hor.horario_agendado 
+                        FROM medico as med
+                        LEFT JOIN horario as hor
+                        on 
+                            med.id = hor.id_medico AND
+                            hor.horario_agendado = 0 AND
+                            hor.data_horario >= current_date()
+                        GROUP BY med.nome
+            
+                        ORDER BY hor.data_horario ASC";
+
+                $cmd = $mysql->conn->prepare($sql);
                 if ($cmd->execute()) :
                     while ($dados = $cmd->fetch(PDO::FETCH_ASSOC)) :
-                        //id do médico
-                        $id = $dados["id"];
-                        //nome do médico
-                        $nm = $dados["nome"];
-
                 ?>
                         <div id="card">
                             <div class="container">
                                 <div class="row" style="margin-bottom: 20px;">
                                     <div class="col-md-7">
-                                        <h3 id="nm_med"><?php echo $nm;  ?></h3>
+                                        <h3 id="nm_med"><?php echo $dados["nome"];  ?></h3>
                                     </div>
                                     <div class="col-md-5">
-                                        <button data-nm-med="<?php echo $nm; ?>" data-id-med="<?php echo $id; ?>" id="btn_edit_cad" class="btn btn-sm btn-outline-primary btn_edit_cad">Editar cadastro</button>
-                                        <button data-nm-med="<?php echo $nm; ?>" data-id-med="<?php echo $id; ?>" id="btn_config_hor" class="btn btn-sm btn-outline-primary">Configurar horário</button>
+                                        <button data-nm-med="<?php echo  $dados["nome"]; ?>" data-id-med="<?php echo $dados["id_med"]; ?>" id="btn_edit_cad" class="btn btn-sm btn-outline-primary btn_edit_cad">Editar cadastro</button>
+                                        <button data-nm-med="<?php echo $dados["nome"]; ?>" data-id-med="<?php echo $dados["id_med"]; ?>" id="btn_config_hor" class="btn btn-sm btn-outline-primary">Configurar horário</button>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <?php
-                                    $sql_h = "SELECT
-                                                    id,
-                                                    DATE_FORMAT(data_horario,'%d/%m/%Y às %H:%i') as data_horario
-                                                FROM horario
-                                                WHERE id_medico = ? AND
-                                                      horario_agendado = 0";
-
-                                    $cmd_h = $mysql->conn->prepare($sql_h);
-                                    $cmd_h->bindValue(1, $id, PDO::PARAM_INT);
-
-                                    if ($cmd_h->execute()) :
-                                        while ($dados_h = $cmd_h->fetch(PDO::FETCH_ASSOC)) :
+                                    $sqlh = "SELECT
+                                                hor.id as id_horario,
+                                                DATE_FORMAT(hor.data_horario, '%d/%m/%Y às %H:%i') as data_horario,
+                                                hor.horario_agendado
+                                            FROM 
+                                                horario as hor
+                                            WHERE 
+                                                hor.id_medico = ? 
+                                            ORDER BY hor.data_horario ASC";
+                                    $cmdh = $mysql->conn->prepare($sqlh);
+                                    $cmdh->bindValue(1, $dados["id_med"], PDO::PARAM_INT);
+                                    if ($cmdh->execute()) :
+                                        while ($dadosh = $cmdh->fetch(PDO::FETCH_ASSOC)) :
                                     ?>
                                             <div class="col-md-3 col-sm-12">
-                                                <button id="btn_hor_med" data-id-hor="<?php echo $dados_h["id"]; ?>" data-id-med="<?php echo $dados["id"]; ?>" class="btn btn-sm btn-block"><?php echo $dados_h["data_horario"]; ?></button>
+                                                <?php if ($dadosh["horario_agendado"] == '1') : ?>
+                                                    <button id="btn_agendado" class="btn btn-sm btn-block"><?php echo $dadosh["data_horario"]; ?></button>
+                                                <?php else : ?>
+                                                    <button id="btn_hor_med" data-id-hor="<?php echo $dadosh["id_horario"]; ?>" data-id-med="<?php echo $dados["id_med"]; ?>" class="btn btn-sm btn-block"><?php echo $dadosh["data_horario"]; ?></button>
+                                                <?php endif; ?>
                                             </div>
                                     <?php endwhile;
                                     endif; ?>
@@ -73,8 +89,12 @@
                             </div>
                         </div>
                         <br>
+
+
                 <?php endwhile;
                 endif; ?>
+
+
             </div>
             <div class="col-md-3"></div>
         </div>
