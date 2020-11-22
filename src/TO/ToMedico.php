@@ -6,6 +6,7 @@ class ToMedico
     private $email;
     private $nome;
     private $senha;
+    private $senha_nova;
     private $data_criacao;
     private $data_alteracao;
 
@@ -85,6 +86,26 @@ class ToMedico
     public function setSenha($senha)
     {
         $this->senha = md5($senha);
+
+        return $this;
+    }
+
+     /**
+     * Get the value of senha_nova
+     */ 
+    public function getSenha_nova()
+    {
+        return $this->senha_nova;
+    }
+
+    /**
+     * Set the value of senha_nova
+     *
+     * @return  self
+     */ 
+    public function setSenha_nova($senha_nova)
+    {
+        $this->senha_nova = md5($senha_nova);
 
         return $this;
     }

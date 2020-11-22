@@ -5,7 +5,7 @@
   margin-bottom: 2%;
 }
 
-#f-cad-med label {
+#f-cad-med label, #f-edit-med label, #nome_med_edit {
   font-weight: bold;
   color: #004768;
 }

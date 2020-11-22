@@ -59,4 +59,74 @@ class ModelMedico extends MySQL
         header("Content-Type: application/json; charset=utf-8", true);
         return json_encode($result);
     }
+
+    public function EditaDadosMedico(ToMedico $to_medico)
+    {
+        try {
+            //Conexão com o banco
+            $this->Conexao();
+
+            //Verificação se a senha antiga está correta
+            $sql_ant = "SELECT 
+                            nome 
+                        FROM 
+                            medico 
+                        WHERE id    = ? AND 
+                              senha = ?";
+
+            $cmd_ant = $this->conn->prepare($sql_ant);
+            $cmd_ant->bindValue(1, $to_medico->getId(), PDO::PARAM_INT);
+            $cmd_ant->bindValue(2, $to_medico->getSenha(), PDO::PARAM_STR);
+
+            if ($cmd_ant->execute()) {
+                if ($cmd_ant->rowCount() > 0) {
+                    //A senha antiga informada está certa
+                    //O próximo passo é redefinir a senha
+
+                    $sql_nov = "UPDATE 
+                                    medico 
+                                SET senha = ?,
+                                    data_alteracao = ? 
+                                WHERE id = ?";
+
+                    $cmd_nov = $this->conn->prepare($sql_nov);
+                    $cmd_nov->bindValue(1, $to_medico->getSenha_nova(), PDO::PARAM_STR);
+                    $cmd_nov->bindValue(2, $to_medico->getData_alteracao(), PDO::PARAM_STR);
+                    $cmd_nov->bindValue(3, $to_medico->getId(), PDO::PARAM_INT);
+
+                    if ($cmd_nov->execute()) {
+                        $result = array(
+                            "sucesso" => true,
+                            "msg" => "A senha foi alterada com sucesso"
+                        );
+                        //Senha alterada
+                    } else {
+                        $result = array(
+                            "sucesso" => false,
+                            "msg" => "Não houve alteração"
+                        );
+                        //Ocorreu algum problema
+                    }
+                } else {
+                    $result = array(
+                        "sucesso" => false,
+                        "msg" => "A senha antiga informada, não está correta."
+                    );
+                    //A senha antiga informada está errada
+                }
+            }
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage());
+            $result = array(
+                "sucesso" => false,
+                "msg" => $ex->getMessage()
+            );
+        }
+
+        //Fecha a conexão
+        $this->Desconecta();
+
+        header("Content-Type: application/json; charset=utf-8", true);
+        return json_encode($result);
+    }
 }

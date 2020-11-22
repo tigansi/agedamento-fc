@@ -45,7 +45,7 @@
                                         <h3 id="nm_med"><?php echo $nm;  ?></h3>
                                     </div>
                                     <div class="col-md-5">
-                                        <button data-id-med="<?php echo $id; ?>" id="btn_edit_cad" class="btn btn-sm btn-outline-primary btn_edit_cad">Editar cadastro</button>
+                                        <button data-nm-med="<?php echo $nm; ?>" data-id-med="<?php echo $id; ?>" id="btn_edit_cad" class="btn btn-sm btn-outline-primary btn_edit_cad">Editar cadastro</button>
                                         <button data-nm-med="<?php echo $nm; ?>" data-id-med="<?php echo $id; ?>" id="btn_config_hor" class="btn btn-sm btn-outline-primary">Configurar horário</button>
                                     </div>
                                 </div>
