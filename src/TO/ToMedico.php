@@ -45,9 +45,12 @@ class ToMedico
      */
     public function setEmail($email)
     {
-        $this->email = $email;
-
-        return $this;
+        if (strlen($email) >= 6 || $email != "") {
+            $this->email = $email;
+            return $this;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -65,9 +68,12 @@ class ToMedico
      */
     public function setNome($nome)
     {
-        $this->nome = $nome;
-
-        return $this;
+        if (strlen($nome) >= 6 || $nome != "") {
+            $this->nome = $nome;
+            return $this;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -85,14 +91,17 @@ class ToMedico
      */
     public function setSenha($senha)
     {
-        $this->senha = md5($senha);
-
-        return $this;
+        if (strlen($senha) >= 6 || $senha != "") {
+            $this->senha = md5($senha);
+            return $this;
+        } else {
+            return false;
+        }
     }
 
-     /**
+    /**
      * Get the value of senha_nova
-     */ 
+     */
     public function getSenha_nova()
     {
         return $this->senha_nova;
@@ -102,12 +111,16 @@ class ToMedico
      * Set the value of senha_nova
      *
      * @return  self
-     */ 
+     */
     public function setSenha_nova($senha_nova)
     {
-        $this->senha_nova = md5($senha_nova);
+        if (strlen($senha_nova) >= 6 || $senha_nova != "") {
+            $this->senha_nova = md5($senha_nova);
 
-        return $this;
+            return $this;
+        } else {
+            return false;
+        }
     }
 
     /**

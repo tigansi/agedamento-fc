@@ -10,6 +10,11 @@
   color: #004768;
 }
 
+#titulo_config{
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
 #btn_form {
   background-color: #0094cf;
   color: white;
@@ -33,3 +38,16 @@
   background-color: #737373;
   color: white;
 }
+
+#btn_edit_cad, #btn_config_hor{
+  border-color: #0094cf;
+  color:#0094cf;
+  border-style: solid;
+  border-width: 2px;
+}
+
+#btn_edit_cad:hover, #btn_config_hor:hover{
+  background-color: #0094cf;
+  color:white;
+}
+

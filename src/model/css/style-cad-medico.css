@@ -1,11 +1,12 @@
-
 #btn_form {
   background-color: #0094cf;
   color: white;
   margin-bottom: 2%;
 }
 
-#f-cad-med label, #f-edit-med label, #nome_med_edit {
+#f-cad-med label,
+#f-edit-med label,
+#nome_med_edit {
   font-weight: bold;
   color: #004768;
 }
@@ -13,7 +14,12 @@
 #card {
   background-color: white;
   padding: 15px;
-  
+}
+
+#titulo_cad_med, #titulo_edit_medico {
+  font-weight: bold;
+  color: #004768;
+  margin-bottom: 20px;
 }
 
 /*

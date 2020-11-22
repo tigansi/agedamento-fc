@@ -12,6 +12,37 @@ if ($to_medico->setNome($dados->nome)) {
         if ($to_medico->setEmail($dados->email)) {
             header('Content-Type: text/plain');
             echo $model_medico->CadastrarMedico($to_medico);
+        } else {
+            $result = array(
+                "sucesso" => false,
+                "msg" => "Verifique o campo do e-mail"
+            );
+
+            //problema com o email
+
+            header("Content-Type: application/json; charset=utf-8", true);
+            echo json_encode($result);
         }
+    } else {
+        $result = array(
+            "sucesso" => false,
+            "msg" => "Verifique o campo da senha"
+        );
+
+        //problema com a senha
+
+        header("Content-Type: application/json; charset=utf-8", true);
+        echo json_encode($result);
     }
+} else {
+
+    $result = array(
+        "sucesso" => false,
+        "msg" => "Verifique o campo do nome"
+    );
+
+    //problema com o nome
+
+    header("Content-Type: application/json; charset=utf-8", true);
+    echo json_encode($result);
 }

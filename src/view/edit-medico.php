@@ -19,12 +19,12 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
                 <div id="card">
                     <center>
-                        <h3 style="font-weight: bold; color: #004768" class="card-title">
-                            Cadastro de médico
+                        <h3 id="titulo_edit_medico" class="card-title">
+                            Editar médico
                         </h3>
                     </center>
 
@@ -48,7 +48,6 @@
                             <p id="info_senha_nova" class="text-danger"></p>
                         </div>
                         <br />
-                        <br />
                         <center>
                             <button type="submit" id="btn_form" class="btn btn-lg">
                                 Atualizar cadastro</button><br />
@@ -60,15 +59,12 @@
                 </div>
             </div>
 
-            <div class="col-md-3"></div>
+            <div class="col-md-4"></div>
         </div>
     </div>
 
     <!-- Jquery -->
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
-
-    <!-- Jquery mask -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 

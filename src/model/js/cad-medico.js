@@ -14,16 +14,17 @@ $(document).ready(function () {
     var nome = $("#nome").val();
     var email = $("#email").val();
     var senha = $("#senha").val();
+    var host = window.location.hostname;
 
-    if (nome.length < 6) {
+    if (nome == "" || nome.length < 6) {
       $("#info_nome").show();
       $("#info_nome").text("O Campo nome deve ter mais de 6 dígitos");
     } else {
-      if (email.length < 6) {
+      if (email == "" || email.length < 6) {
         $("#info_email").show();
         $("#info_email").text("O Campo nome deve ter mais de 6 dígitos");
       } else {
-        if (senha.length < 6) {
+        if (senha == "" || senha.length < 6) {
           $("#info_senha").show();
           $("#info_senha").text("O Campo nome deve ter mais de 6 dígitos");
         } else {
@@ -39,7 +40,9 @@ $(document).ready(function () {
               dados: JSON.stringify(dados),
             },
             url:
-              "http://localhost/agendamento-fc/src/controller/cadastroMedico.php",
+              "http://" +
+              host +
+              "/agendamento-fc/src/controller/cadastroMedico.php",
             success: function (data) {
               console.log(data);
               if (data["sucesso"] == true) {

@@ -72,6 +72,9 @@ class ModelHorario extends MySQL
             );
         }
 
+        //Fecha a conexão
+        $this->Desconecta();
+
         header("Content-Type: application/json; charset=utf-8", true);
         return json_encode($result);
     }
@@ -106,6 +109,9 @@ class ModelHorario extends MySQL
                 "msg" => $ex->getMessage()
             );
         }
+
+        //Fecha a conexão
+        $this->Desconecta();
 
         header("Content-Type: application/json; charset=utf-8", true);
         return json_encode($result);
@@ -149,6 +155,9 @@ class ModelHorario extends MySQL
                 "msg" => $ex->getMessage()
             );
         }
+
+        //Fecha a conexão
+        $this->Desconecta();
 
         header("Content-Type: application/json; charset=utf-8", true);
         return json_encode($result);

@@ -9,17 +9,29 @@ $model_medico = new ModelMedico();
 $dados = json_decode($_POST["dados"]);
 
 if ($to_medico->setId($dados->id_medico)) {
-    if ($to_medico->setSenha($dados->senha_atiga)) {
-        if ($to_medico->setSenha_nova($dados->senha_nova)) {
+    if ($to_medico->setNome($dados->nm_medico)) {
+        if ($to_medico->setSenha($dados->senha_atiga)) {
+            if ($to_medico->setSenha_nova($dados->senha_nova)) {
 
-            $to_medico->setData_alteracao(date("Y-m-d h:m"));
-            echo $model_medico->EditaDadosMedico($to_medico);
+                $to_medico->setData_alteracao(date("Y-m-d h:m"));
+                echo $model_medico->EditaDadosMedico($to_medico);
+            } else {
+                $result = array(
+                    "sucesso" => false,
+                    "msg" => "Verifique o campo da nova senha"
+                );
+                //informa erro com a senha nova
+
+                header("Content-Type: application/json; charset=utf-8", true);
+                echo json_encode($result);
+            }
         } else {
             $result = array(
                 "sucesso" => false,
-                "msg" => "Verifique o campo da nova senha"
+                "msg" => "Verifique o campo da antiga senha"
             );
-            //informa erro com a senha nova
+
+            //informa erro com senha antiga
 
             header("Content-Type: application/json; charset=utf-8", true);
             echo json_encode($result);
@@ -27,10 +39,10 @@ if ($to_medico->setId($dados->id_medico)) {
     } else {
         $result = array(
             "sucesso" => false,
-            "msg" => "Verifique o campo da antiga senha"
+            "msg" => "Verifique o campo do nome"
         );
 
-        //informa erro com senha antiga
+        //informa erro com nome
 
         header("Content-Type: application/json; charset=utf-8", true);
         echo json_encode($result);

@@ -51,7 +51,7 @@
             <div class="col-md-5">
                 <div id="card">
                     <center>
-                        <h3 id="titulo_config" style="font-weight: bold;">Horários configurados</h3>
+                        <h3 id="titulo_config">Horários configurados</h3>
                     </center>
                     <?php
                     include("../model/config-banco-dados.php");
@@ -63,7 +63,7 @@
                                 DATE_FORMAT(data_horario,'%d/%m/%Y %H:%i') as data_horario,
                                 horario_agendado
                             FROM horario
-                            WHERE id_medico = ?";
+                            WHERE id_medico = ? ORDER BY data_horario ASC";
 
                     $cmd = $mysql->conn->prepare($sql);
                     $cmd->bindValue(1, $id);
@@ -85,8 +85,6 @@
                                 </div>
                                 <hr>
                             </div>
-
-
                     <?php endwhile;
                     endif; ?>
 

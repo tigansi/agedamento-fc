@@ -56,6 +56,9 @@ class ModelMedico extends MySQL
             );
         }
 
+        //Fecha a conexão
+        $this->Desconecta();
+
         header("Content-Type: application/json; charset=utf-8", true);
         return json_encode($result);
     }
@@ -81,18 +84,20 @@ class ModelMedico extends MySQL
             if ($cmd_ant->execute()) {
                 if ($cmd_ant->rowCount() > 0) {
                     //A senha antiga informada está certa
-                    //O próximo passo é redefinir a senha
+                    //O próximo passo é redefinir a senha ou o nome
 
                     $sql_nov = "UPDATE 
                                     medico 
-                                SET senha = ?,
+                                SET nome = ?,
+                                    senha = ?,
                                     data_alteracao = ? 
                                 WHERE id = ?";
 
                     $cmd_nov = $this->conn->prepare($sql_nov);
-                    $cmd_nov->bindValue(1, $to_medico->getSenha_nova(), PDO::PARAM_STR);
-                    $cmd_nov->bindValue(2, $to_medico->getData_alteracao(), PDO::PARAM_STR);
-                    $cmd_nov->bindValue(3, $to_medico->getId(), PDO::PARAM_INT);
+                    $cmd_nov->bindValue(1, $to_medico->getNome(), PDO::PARAM_STR);
+                    $cmd_nov->bindValue(2, $to_medico->getSenha_nova(), PDO::PARAM_STR);
+                    $cmd_nov->bindValue(3, $to_medico->getData_alteracao(), PDO::PARAM_STR);
+                    $cmd_nov->bindValue(4, $to_medico->getId(), PDO::PARAM_INT);
 
                     if ($cmd_nov->execute()) {
                         $result = array(

@@ -64,9 +64,13 @@ class ToHorario
      */
     public function setData_horario($data_horario)
     {
-        $this->data_horario = $data_horario;
+        if ($data_horario > date("Y-m-d h:m")) {
+            $this->data_horario = $data_horario;
 
-        return $this;
+            return $this;
+        } else {
+            return false;
+        }
     }
 
     /**
