@@ -6,10 +6,6 @@ $(document).ready(function () {
   $("#info_problema").hide();
   $("#info_acerto").hide();
 
-  $("#nome").val("Tiago Igansi");
-  $("#email").val("tiago@igansi.com");
-  $("#senha").val("Saud@2020");
-
   $("#f-cad-med").submit(function () {
     var nome = $("#nome").val();
     var email = $("#email").val();

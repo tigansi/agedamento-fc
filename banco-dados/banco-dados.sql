@@ -28,3 +28,14 @@ CREATE TABLE horario
 	FOREIGN KEY (id_medico) REFERENCES medico(id)
 )DEFAULT CHARSET=utf8;
 
+
+INSERT 
+	INTO 
+		medico (email, nome, senha) 
+	VALUES('tiago@igansi.com', 'Tiago Igansi', 'e10adc3949ba59abbe56e057f20f883e'),
+	VALUES('1@1.com', 'Dr. João Augusto de Alcântara', 'e10adc3949ba59abbe56e057f20f883e')
+
+# Senha 123456
+
+
+
